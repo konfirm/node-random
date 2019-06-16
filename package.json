@@ -1,0 +1,21 @@
+{
+	"name": "@konfirm/random",
+	"version": "0.0.0",
+	"description": "Safe random number generator",
+	"main": "source/Random.js",
+	"scripts": {
+		"test": "lab -vclr"
+	},
+	"keywords": [
+		"random"
+	],
+	"author": "Rogier Spieker <rogier+npm@konfirm.eu>",
+	"license": "MIT",
+	"devDependencies": {
+		"@konfirm/labrat": "^2.0.0",
+		"eslint": "^5.16.0",
+		"eslint-config-prettier": "^4.3.0",
+		"eslint-plugin-prettier": "^3.1.0",
+		"prettier": "^1.17.1"
+	}
+}
