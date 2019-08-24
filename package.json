@@ -1,6 +1,6 @@
 {
 	"name": "@konfirm/random",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Safe random number generator",
 	"main": "source/Random.js",
 	"scripts": {
