@@ -7,7 +7,9 @@
 		"test": "./node_modules/.bin/lab -vclr"
 	},
 	"keywords": [
-		"random"
+		"random",
+		"rng",
+		"random number"
 	],
 	"author": "Rogier Spieker <rogier+npm@konfirm.eu>",
 	"license": "MIT",
