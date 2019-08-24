@@ -82,11 +82,11 @@ class Random {
 	 *
 	 * @static
 	 * @param {number} limit
-	 * @param {number} [length=Infinity]
+	 * @param {number} [total=Infinity]
 	 * @memberof Random
 	 */
-	static *generate(limit, length = Infinity) {
-		while (--length >= 0) {
+	static *generate(limit, total = Infinity) {
+		while (--total >= 0) {
 			yield this.safeRandom(limit);
 		}
 	}

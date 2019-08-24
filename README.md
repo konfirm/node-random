@@ -37,14 +37,14 @@ const rand = [...Random.generate(16, 8)];
 
 ### API
 
-#### `*Random.generate(limit [, length = Infinity])`
+#### `*Random.generate(limit [, total = Infinity])`
 
 The `Random.generate` method returns a [Generator][5], which only generates value if these are being consumed. This is a very nice on-demand way of programming complicated and/or expensive calls, such as generating random values.
 
-| argument | type   | default    | purpose                                                                     |
-| -------- | ------ | ---------- | --------------------------------------------------------------------------- |
-| `limit`  | number |            | The upper limit of the generated value(s)                                   |
-| `length` | number | `Infinity` | Stop generating values after `length` (`Infinity` means it will never stop) |
+| argument | type   | default    | purpose                                                                    |
+|----------|--------|------------|----------------------------------------------------------------------------|
+| `limit`  | number |            | The upper limit of the generated value(s)                                  |
+| `total`  | number | `Infinity` | Stop generating values after `total` (`Infinity` means it will never stop) |
 
 There are a few ways in which [Generators][5] can be used.
 
@@ -62,8 +62,8 @@ for (let i = 0; i < 100; ++i) {
 }
 ```
 
-If you know up front how many random values you will be using, you can specify the `length` argument too.
-Of course the `Random.generate` method will create as many generators as you want, so knowing up front how many values are needed is limited to the exact context where the generators are used (hopefully making it easier to determine the `length` requirement).
+If you know up front how many random values you will be using, you can specify the `total` argument too.
+Of course the `Random.generate` method will create as many generators as you want, so knowing up front how many values are needed is limited to the exact context where the generators are used (hopefully making it easier to determine the `total` requirement).
 
 This opens up for a couple of different ways to benefit from the generator.
 
@@ -90,7 +90,7 @@ const rand = [...Random.generate(16, 100)];
 The `Random.safeRandom` method creates a single random value ranging from 0 to `limit`.
 
 | argument | type   | purpose                                   |
-| -------- | ------ | ----------------------------------------- |
+|----------|--------|-------------------------------------------|
 | `limit`  | number | The upper limit of the generated value(s) |
 
 As mentioned with the infinite generator above, this method can be used if individual numbers are needed throughout the lifecycle of an application, without the option to use fixed lengths.
@@ -110,7 +110,7 @@ for (let i = 0; i < 100; ++i) {
 Create a random value using the specified number of random bytes. It will not be capped to a limit, instead the output will be an unsigned integer value for `bytes` values up to 3, and signed after that.
 
 | argument | type   | purpose                                                |
-| -------- | ------ | ------------------------------------------------------ |
+|----------|--------|--------------------------------------------------------|
 | `bytes`  | number | Create a random value (uses [`Crypto.randomBytes`][7]) |
 
 #### `Random.parameters(limit)`
@@ -118,7 +118,7 @@ Create a random value using the specified number of random bytes. It will not be
 Calculate the umask and bytes needed to safely create an unbiased random value. The number or bytes is used to create a large enough random number (using `Random.random`) and the umask is used to persuade the random value within the unbiased value range.
 
 | argument | type   | purpose                                   |
-| -------- | ------ | ----------------------------------------- |
+|----------|--------|-------------------------------------------|
 | `limit`  | number | The upper limit of the generated value(s) |
 
 ## Credits
