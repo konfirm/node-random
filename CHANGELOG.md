@@ -8,10 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
+Migration to Typescript, no changes in usage for CommonJS (the only supported use).
+
 ### Added
+
+- typescript support
+- ES module support
+
 ### Changed
-### Removed
+
+- CJS support is now a result of the build process
 
 
 ## [1.0.4] - 2020-09-06
