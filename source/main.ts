@@ -1,5 +1,10 @@
 import { randomBytes } from 'crypto';
 
+export type MaskBytes = {
+	mask: number;
+	bytes: number;
+};
+
 /**
  * Random Number Generator
  * Based on the awesome `random-number-csprng` module:
@@ -13,16 +18,16 @@ import { randomBytes } from 'crypto';
  */
 
 /**
-	 * calculate the mask and bytes parameters
-	 *
-	 * @static
-	 * @param {number} limit
-	 * @returns {object} {mask, bytes}
-	 * @memberof Random
-	 */
-export function parameters(limit: number) {
-	let bits = 0;
-	let mask = 0;
+ * calculate the mask and bytes parameters
+ *
+ * @static
+ * @param {number} limit
+ * @returns {object} {mask, bytes}
+ * @memberof Random
+ */
+export function parameters(limit: number): MaskBytes {
+	let bits: number = 0;
+	let mask: number = 0;
 
 	while (limit > 0) {
 		mask = (mask << 1) | 1;
@@ -41,11 +46,11 @@ export function parameters(limit: number) {
  * @returns {number} random
  * @memberof Random
  */
-export function random(bytes: number) {
-	const buffer = randomBytes(bytes);
-	let random = 0;
+export function random(bytes: number): number {
+	const buffer: Buffer = randomBytes(bytes);
+	let random: number = 0;
 
-	for (let i = 0; i < bytes; ++i) {
+	for (let i: number = 0; i < bytes; ++i) {
 		random |= buffer[i] << (8 * i);
 	}
 
@@ -62,7 +67,7 @@ export function random(bytes: number) {
  */
 export function safeRandom(limit: number): number {
 	const { mask, bytes } = parameters(limit);
-	const rand = random(bytes) & mask;
+	const rand: number = random(bytes) & mask;
 
 	//  The `& mask` above is what makes this random safe(r)
 	//  I suggest reading the full comment block at:
@@ -83,8 +88,10 @@ export function safeRandom(limit: number): number {
  * @param {number} [total=Infinity]
  * @memberof Random
  */
-export function* generate(limit: number, total: number = Infinity) {
-	while (--total >= 0) {
+export function* generate(limit: number, total: number = Infinity): Generator<number> {
+	let length: number = total;
+
+	while (--length >= 0) {
 		yield safeRandom(limit);
 	}
 }
