@@ -269,7 +269,7 @@ This module is based on the hard work of [Sven Slootweg][1] for the [random-numb
 
 A good way to visualize the randomness of the library is by generating random colored pixels. The sample below is a 500x500 image with each pixel consisting of random values between 0 and 255 for the red, green and blue channels.
 
-[randomness](./generated/random.png)
+[randomness](https://raw.githubusercontent.com/konfirm/node-random/master/generated/random.png)
 
 ## License
 

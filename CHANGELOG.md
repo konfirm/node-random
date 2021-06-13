@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.1] - 2021-06-13
 
 ### Changed
+
 - fixed typos in documentation
 - added proof image
 
@@ -63,11 +64,11 @@ No changes (fixing seemingly corrupted package)
 
 Initial release
 
-[unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.1.1...HEAD
-[1.1.1]: https://github.com/konfirm/node-alphabet/compare/v1.1.0...v1.1.1
-[1.1.0]: https://github.com/konfirm/node-alphabet/compare/v1.0.4...v1.1.0
-[1.0.4]: https://github.com/konfirm/node-alphabet/compare/v1.0.3...v1.0.4
-[1.0.3]: https://github.com/konfirm/node-alphabet/compare/v1.0.2...v1.0.3
-[1.0.2]: https://github.com/konfirm/node-alphabet/compare/v1.0.1...v1.0.2
-[1.0.1]: https://github.com/konfirm/node-alphabet/compare/v1.0.0...v1.0.1
-[1.0.0]: https://github.com/konfirm/node-alphabet/releases/tag/v1.0.0
+[unreleased]: https://github.com/konfirm/node-random/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/konfirm/node-random/compare/v1.1.0...v1.1.1
+[1.1.0]: https://github.com/konfirm/node-random/compare/v1.0.4...v1.1.0
+[1.0.4]: https://github.com/konfirm/node-random/compare/v1.0.3...v1.0.4
+[1.0.3]: https://github.com/konfirm/node-random/compare/v1.0.2...v1.0.3
+[1.0.2]: https://github.com/konfirm/node-random/compare/v1.0.1...v1.0.2
+[1.0.1]: https://github.com/konfirm/node-random/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/konfirm/node-random/releases/tag/v1.0.0

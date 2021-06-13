@@ -20,6 +20,13 @@
 		"rng",
 		"random number"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/konfirm/node-random.git"
+	},
+	"bugs": {
+		"url": "https://github.com/konfirm/node-random/issues"
+	},
 	"author": "Rogier Spieker <rogier+npm@konfirm.eu>",
 	"license": "MIT",
 	"engines": {
