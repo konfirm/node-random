@@ -182,5 +182,12 @@ test('Random - generate', (t) => {
 		t.true(Math.max(...all) <= max, `highest of [0..${max}] is at most ${max}`);
 	});
 
+
+	const generator = Random.generate(16);
+	const rand = Array.from({ length: 1000 }, () => generator.next().value);
+
+	t.true(rand.every((value) => value >= 0 && value <= 16), `generator does not need a total cap`);
+
+
 	t.end();
 });
