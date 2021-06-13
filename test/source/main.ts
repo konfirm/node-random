@@ -1,6 +1,6 @@
 import * as test from 'tape';
 import each from 'template-literal-each';
-import * as Random from '../../source/Random';
+import * as Random from '../../source/main';
 
 function range(value: string) {
 	const [from, to] = value.split('-').map(Number);
