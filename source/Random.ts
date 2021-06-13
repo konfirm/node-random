@@ -1,4 +1,4 @@
-const Crypto = require('crypto');
+import { randomBytes } from 'crypto';
 
 /**
  * Random Number Generator
@@ -10,11 +10,9 @@ const Crypto = require('crypto');
  * - Added generator implementation
  * - Lower boundary of random numbers is fixed at 0 instead of
  *   the more feature complete 'minimum' on random-number-cspring
- *
- * @class Random
  */
-class Random {
-	/**
+
+/**
 	 * calculate the mask and bytes parameters
 	 *
 	 * @static
@@ -22,74 +20,71 @@ class Random {
 	 * @returns {object} {mask, bytes}
 	 * @memberof Random
 	 */
-	static parameters(limit) {
-		let bits = 0;
-		let mask = 0;
+export function parameters(limit: number) {
+	let bits = 0;
+	let mask = 0;
 
-		while (limit > 0) {
-			mask = (mask << 1) | 1;
-			limit >>>= 1;
-			++bits;
-		}
-
-		return { mask, bytes: Math.ceil(bits / 8) };
+	while (limit > 0) {
+		mask = (mask << 1) | 1;
+		limit >>>= 1;
+		++bits;
 	}
 
-	/**
-	 * Get a random number
-	 *
-	 * @static
-	 * @param {number} bytes
-	 * @returns {number} random
-	 * @memberof Random
-	 */
-	static random(bytes) {
-		const buffer = Crypto.randomBytes(bytes);
-		let random = 0;
-
-		for (let i = 0; i < bytes; ++i) {
-			random |= buffer[i] << (8 * i);
-		}
-
-		return random;
-	}
-
-	/**
-	 * Get a safe random number (needs to fit inside a masked range, otherwise a new one is generated)
-	 *
-	 * @static
-	 * @param {number} limit
-	 * @returns {number} random
-	 * @memberof Random
-	 */
-	static safeRandom(limit) {
-		const { mask, bytes } = this.parameters(limit);
-		const random = this.random(bytes) & mask;
-
-		//  The `& mask` above is what makes this random safe(r)
-		//  I suggest reading the full comment block at:
-		//  https://github.com/joepie91/node-random-number-csprng/blob/5899a8e06ffa134c307e1153f4f810af2243cff6/src/index.js#L109
-
-		//  If the random number is below our limit, it means it can be considered
-		//  to be unbiased and usable, a new one is generated otherwise
-		//  However unlikely, this could trigger an endless loop, we may need to consider
-		//  to limit the maximum number of iteratons (and then what?)
-		return random <= limit ? random : this.safeRandom(limit);
-	}
-
-	/**
-	 * Generator to create the specified amount of random numbers
-	 *
-	 * @static
-	 * @param {number} limit
-	 * @param {number} [total=Infinity]
-	 * @memberof Random
-	 */
-	static *generate(limit, total = Infinity) {
-		while (--total >= 0) {
-			yield this.safeRandom(limit);
-		}
-	}
+	return { mask, bytes: Math.ceil(bits / 8) };
 }
 
-module.exports = Random;
+/**
+ * Get a random number
+ *
+ * @static
+ * @param {number} bytes
+ * @returns {number} random
+ * @memberof Random
+ */
+export function random(bytes: number) {
+	const buffer = randomBytes(bytes);
+	let random = 0;
+
+	for (let i = 0; i < bytes; ++i) {
+		random |= buffer[i] << (8 * i);
+	}
+
+	return random;
+}
+
+/**
+ * Get a safe random number (needs to fit inside a masked range, otherwise a new one is generated)
+ *
+ * @static
+ * @param {number} limit
+ * @returns {number} random
+ * @memberof Random
+ */
+export function safeRandom(limit: number): number {
+	const { mask, bytes } = parameters(limit);
+	const rand = random(bytes) & mask;
+
+	//  The `& mask` above is what makes this random safe(r)
+	//  I suggest reading the full comment block at:
+	//  https://github.com/joepie91/node-random-number-csprng/blob/5899a8e06ffa134c307e1153f4f810af2243cff6/src/index.js#L109
+
+	//  If the random number is below our limit, it means it can be considered
+	//  to be unbiased and usable, a new one is generated otherwise
+	//  However unlikely, this could trigger an endless loop, we may need to consider
+	//  to limit the maximum number of iteratons (and then what?)
+	return rand <= limit ? rand : safeRandom(limit);
+}
+
+/**
+ * Generator to create the specified amount of random numbers
+ *
+ * @static
+ * @param {number} limit
+ * @param {number} [total=Infinity]
+ * @memberof Random
+ */
+export function* generate(limit: number, total: number = Infinity) {
+	while (--total >= 0) {
+		yield safeRandom(limit);
+	}
+}

@@ -1,8 +1,8 @@
-/* global source, describe, it, each, expect */
+import * as test from 'tape';
+import each from 'template-literal-each';
+import * as Random from '../../source/Random';
 
-const Random = source('Random');
-
-function range(value) {
+function range(value: string) {
 	const [from, to] = value.split('-').map(Number);
 
 	return [from].concat(
@@ -10,180 +10,177 @@ function range(value) {
 	);
 }
 
-function repeat(times, call) {
-	while (times-- >= 0) {
-		call();
-	}
+function repeat<T = unknown>(length: number, call: Function) {
+	return ([] as Array<T>).concat(Array.from({ length }, () => call()));
 }
 
-describe('Random', () => {
-	describe('implements parameters', () => {
-		each`
-            value     | mask    | bytes
-            ----------|---------|------
-            0         | 0       | 0
-            1         | 1       | 1
-            2-3       | 3       | 1
-            4-7       | 7       | 1
-            8-15      | 15      | 1
-            16-31     | 31      | 1
-            32-63     | 63      | 1
-            64-127    | 127     | 1
-            128-255   | 255     | 1
-            256-511   | 511     | 2
-            512-1023  | 1023    | 2
-            1024-2047 | 2047    | 2
-            2048-4095 | 4095    | 2
-            4096-8191 | 8191    | 2
-            8192      | 16383   | 2
-            16383     | 16383   | 2
-            16384     | 32767   | 2
-            32767     | 32767   | 2
-            32768     | 65535   | 2
-            65535     | 65535   | 2
-            65536     | 131071  | 3
-            131071    | 131071  | 3
-            131072    | 262143  | 3
-            262143    | 262143  | 3
-            262144    | 524287  | 3
-            524287    | 524287  | 3
-            524288    | 1048575 | 3
-        `(
-			'values $value return mask $mask and bytes $bytes',
-			({ value, mask, bytes }, next) => {
-				const param = { mask: Number(mask), bytes: Number(bytes) };
+test('Random - parameters', (t) => {
+	each`
+		value          | mask    | bytes
+		---------------|---------|------
+		0              | 0       | 0
+		1              | 1       | 1
+		2-3            | 3       | 1
+		4-7            | 7       | 1
+		8-15           | 15      | 1
+		16-31          | 31      | 1
+		32-63          | 63      | 1
+		64-127         | 127     | 1
+		128-255        | 255     | 1
+		256-511        | 511     | 2
+		512-1023       | 1023    | 2
+		1024-2047      | 2047    | 2
+		2048-4095      | 4095    | 2
+		4096-8191      | 8191    | 2
+		8192-16383     | 16383   | 2
+		16384-32767    | 32767   | 2
+		32768-65535    | 65535   | 2
+		65536-131071   | 131071  | 3
+		131072-262143  | 262143  | 3
+		262144-524287  | 524287  | 3
+		524288-1048575 | 1048575 | 3
+	`((record) => {
+		const { value, mask, bytes } = record as { [key: string]: string };
+		const param = { mask: Number(mask), bytes: Number(bytes) };
+		const parameters = range(value).map((value) => Random.parameters(value));
 
-				range(value).forEach((value) => {
-					expect(Random.parameters(value)).to.equal(param);
-				});
-
-				next();
-			}
+		t.true(
+			parameters.every(({ mask, bytes }) => mask === param.mask && bytes === param.bytes),
+			`all ${parameters.length} values ${value} provides mask ${mask}, bytes ${bytes}`
 		);
 	});
 
-	describe('implements random', () => {
-		const signed = (bytes) => {
-			const pow = Math.pow(2, bytes * 8 - 1);
+	t.end();
+});
 
-			return [-pow, pow - 1];
-		};
-		const unsigned = (bytes) => {
-			const [min, max] = signed(bytes);
 
-			return [min - min, max - min];
-		};
+test('Random - random', (t) => {
+	const signed = (bytes: number) => {
+		const pow = Math.pow(2, bytes * 8 - 1);
 
-		each`
-            bytes | iterations
-            ------|------------
-            0     | 10
-            1     | 1000
-            2     | 1000
-            3     | 1000
-            4     | 1000
-            5     | 1000
-            6     | 1000
-            7     | 1000
-            8     | 1000
-            9     | 1000
-            10    | 1000
-            16    | 1000
-            32    | 1000
-            64    | 1000
-            128   | 1000
-            256   | 1000
-            512   | 1000
-        `('$bytes bytes', ({ bytes, iterations }, next) => {
-			const size = Number(bytes);
-			const [min, max] = (size >= 4 ? signed : unsigned)(size);
+		return [-pow, pow - 1];
+	};
+	const unsigned = (bytes: number) => {
+		const [min, max] = signed(bytes);
 
-			repeat(Number(iterations), () => {
-				const rand = Random.random(size);
+		return [min - min, max - min];
+	};
 
-				expect(rand).to.be.least(min);
-				expect(rand).to.be.most(max);
-			});
+	each`
+		bytes | iterations
+		------|------------
+		0     | 10
+		1     | 1000
+		2     | 1000
+		3     | 1000
+		4     | 1000
+		5     | 1000
+		6     | 1000
+		7     | 1000
+		8     | 1000
+		9     | 1000
+		10    | 1000
+		16    | 1000
+		32    | 1000
+		64    | 1000
+		128   | 1000
+		256   | 1000
+		512   | 1000
+	`((record) => {
+		const { bytes, iterations } = record as { [key: string]: string }
+		const size = Number(bytes);
+		const [min, max] = (size >= 4 ? signed : unsigned)(size);
+		const generated = repeat<number>(Number(iterations), () => Random.random(size));
 
-			next();
-		});
+		t.true(generated.every((rand) => rand >= min && rand <= max), `random from ${bytes} bytes is between ${min} and ${max}`);
 	});
 
-	describe('implements safeRandom', () => {
-		each`
-            limit | iterations
-            ------|------------
-            0     | 10
-            1     | 1000
-            2     | 1000
-            3     | 1000
-            4     | 1000
-            5     | 1000
-            6     | 1000
-            7     | 1000
-            8     | 1000
-            9     | 1000
-            10    | 1000
-            16    | 1000
-            32    | 1000
-            64    | 1000
-            128   | 1000
-            256   | 1000
-            512   | 1000
-        `('limit $limit is never exceeded', ({ limit, iterations }, next) => {
-			const max = Number(limit);
+	t.end();
+});
 
-			repeat(Number(iterations), () => {
-				const rand = Random.safeRandom(max);
+test('Random - safeRandom', (t) => {
+	const signed = (bytes: number) => {
+		const pow = Math.pow(2, bytes * 8 - 1);
 
-				expect(rand).to.be.least(0);
-				expect(rand).to.be.most(max);
-			});
+		return [-pow, pow - 1];
+	};
+	const unsigned = (bytes: number) => {
+		const [min, max] = signed(bytes);
 
-			next();
-		});
+		return [min - min, max - min];
+	};
+
+	each`
+		limit | iterations
+		------|------------
+		0     | 10
+		1     | 1000
+		2     | 1000
+		3     | 1000
+		4     | 1000
+		5     | 1000
+		6     | 1000
+		7     | 1000
+		8     | 1000
+		9     | 1000
+		10    | 1000
+		16    | 1000
+		32    | 1000
+		64    | 1000
+		128   | 1000
+		256   | 1000
+		512   | 1000
+	`((record) => {
+		const { limit, iterations } = record as { [key: string]: string }
+		const max = Number(limit);
+		const generated = repeat<number>(Number(iterations), () => Random.safeRandom(Number(limit)));
+
+		t.true(generated.every((rand) => rand >= 0 && rand <= max), `random from ${limit} limit is between 0 and ${max}`);
 	});
 
-	describe('implements generate', () => {
-		each`
-            limit
-            ------
-            0
-            1
-            2
-            10
-            50
-            100
-            500
-            1000
-            5000
-            10000
-            50000
-        `('limit $limit is between 0 and $limit', ({ limit }, next) => {
-			const max = Number(limit);
+	t.end();
+});
 
-			const one = [...Random.generate(max, 1)];
-			const two = [...Random.generate(max, 2)];
-			const ten = [...Random.generate(max, 10)];
-			const all = [...Random.generate(max, max)];
+test('Random - generate', (t) => {
+	each`
+		limit
+		------
+		0
+		1
+		2
+		10
+		50
+		100
+		500
+		1000
+		5000
+		10000
+		50000
+	`((record) => {
+		const { limit } = record as { limit: string };
+		const max = Number(limit);
 
-			expect(one).to.be.length(1);
-			expect(Math.min(...one)).to.be.least(0);
-			expect(Math.max(...one)).to.be.most(max);
+		const one = [...Random.generate(max, 1)];
+		const two = [...Random.generate(max, 2)];
+		const ten = [...Random.generate(max, 10)];
+		const all = [...Random.generate(max, max)];
 
-			expect(two).to.be.length(2);
-			expect(Math.min(...two)).to.be.least(0);
-			expect(Math.max(...two)).to.be.most(max);
+		t.equal(one.length, 1, `[${one}] has length 2`);
+		t.true(Math.min(...one) >= 0, `lowest of [${one}] is at least 0`);
+		t.true(Math.max(...one) <= max, `highest of [${one}] is at most ${max}`);
 
-			expect(ten).to.be.length(10);
-			expect(Math.min(...ten)).to.be.least(0);
-			expect(Math.max(...ten)).to.be.most(max);
+		t.equal(two.length, 2, `[${two}] has length 2`);
+		t.true(Math.min(...two) >= 0, `lowest of [${two}] is at least 0`);
+		t.true(Math.max(...two) <= max, `highest of [${two}] is at most ${max}`);
 
-			expect(all).to.be.length(max);
-			expect(Math.min(...all)).to.be.least(0);
-			expect(Math.max(...all)).to.be.most(max);
+		t.equal(ten.length, 10, `[${ten}] has length 10`);
+		t.true(Math.min(...ten) >= 0, `lowest of [${ten}] is at least 0`);
+		t.true(Math.max(...ten) <= max, `highest of [${ten}] is at most ${max}`);
 
-			next();
-		});
+		t.equal(all.length, max, `[0..${max}] has length ${max}`);
+		t.true(Math.min(...all) >= 0, `lowest of [0..${max}] is at least 0`);
+		t.true(Math.max(...all) <= max, `highest of [0..${max}] is at most ${max}`);
 	});
+
+	t.end();
 });
