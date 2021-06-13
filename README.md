@@ -39,7 +39,7 @@ const { generate } = require('@konfirm/random');
 const rand = [...generate(16, 8)];
 ```
 
-The syntax examples in versions before [Unreleased] also still work (fully backward compatible). With the support of module systems (ES Modules, Typescript) we've chosen to not explicitly have a default export.
+The syntax examples in versions before 1.1 also still work (fully backward compatible). With the support of module systems (ES Modules, Typescript) we've chosen to not explicitly have a default export.
 
 ```js
 const Random = require('@konfirm/random');
@@ -265,6 +265,11 @@ The response is an object (exported typescript type is `MaskBytes`) with the fol
 
 This module is based on the hard work of [Sven Slootweg][1] for the [random-number-csprng][3] package. If you are considering donating, please [donate to him][2].
 
+## Proof
+
+A good way to visualize the randomness of the library is by generating random colored pixels. The sample below is a 500x500 image with each pixel consiting of random values between 0 and 255 for the red, green and blue channels.
+
+[randomness](./generated/random.png)
 
 ## License
 
