@@ -5,8 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-
 ## [Unreleased]
+
+### Fixed
+### Added
+### Changed
+### Removed
+
+
+## [1.1.1] - 2021-06-13
+
+### Changed
+- fixed typos in documentation
+- added proof image
+
+## [1.1.0] - 2021-06-13
 
 Migration to Typescript, no changes in usage for CommonJS (the only supported use).
 
@@ -50,7 +63,9 @@ No changes (fixing seemingly corrupted package)
 
 Initial release
 
-[unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.4...HEAD
+[unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/konfirm/node-alphabet/compare/v1.1.0...v1.1.1
+[1.1.0]: https://github.com/konfirm/node-alphabet/compare/v1.0.4...v1.1.0
 [1.0.4]: https://github.com/konfirm/node-alphabet/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/konfirm/node-alphabet/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/konfirm/node-alphabet/compare/v1.0.1...v1.0.2
