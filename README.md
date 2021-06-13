@@ -91,8 +91,8 @@ const generator = generate(32);
 
 //  generate 100 random values
 for (let i = 0; i < 100; ++i) {
-	const rand = generator.next().value;
-	console.log(rand);
+	const { value } = generator.next();
+	console.log(value);
 }
 ```
 
@@ -105,8 +105,8 @@ const generator = generate(32);
 
 //  generate 100 random values
 for (let i = 0; i < 100; ++i) {
-	const rand = generator.next().value;
-	console.log(rand);
+	const { value } = generator.next();
+	console.log(value);
 }
 ```
 
@@ -119,8 +119,8 @@ const generator = generate(32);
 
 //  generate 100 random values
 for (let i = 0; i < 100; ++i) {
-	const rand = generator.next().value;
-	console.log(rand);
+	const { value } = generator.next();
+	console.log(value);
 }
 ```
 
