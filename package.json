@@ -1,6 +1,6 @@
 {
 	"name": "@konfirm/random",
-	"version": "1.1.3",
+	"version": "1.1.4",
 	"description": "Safe random number generator",
 	"main": "dist/cjs/main.js",
 	"module": "dist/esm/main.mjs",
