@@ -1,5 +1,9 @@
 .editorconfig
+.gitattributes
+.github
 .nyc_output
-.travis.yml
 coverage
+generated
+rollup.config.js
 test
+tsconfig.json

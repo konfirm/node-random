@@ -10,10 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Added
 ### Changed
+### Removed
+
+
+## [1.1.3]
+
+### Changed
 - replaced tap-spect with tap-arc
 - updated CI/CD to use github actions
-
-### Removed
 
 
 ## [1.1.2] - 2021-06-13
