@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 ### Changed
 - replaced tap-spect with tap-arc
+- updated CI/CD to use github actions
 
 ### Removed
 
