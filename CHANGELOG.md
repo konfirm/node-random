@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 
-## [1.1.3]
+## [1.1.3] - 2021-12-13
 
 ### Changed
 - replaced tap-spect with tap-arc
@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - fixed typos in documentation
 - added proof image
+
 
 ## [1.1.0] - 2021-06-13
 
@@ -54,9 +55,11 @@ Migration to Typescript, no changes in usage for CommonJS (the only supported us
 - updated dependencies
 - updated CI engines, adding 13 and 14, removing 7
 
+
 ## [1.0.3] - 2019-08-24
 
 No changes (fixing seemingly corrupted package)
+
 
 ## [1.0.2] - 2019-08-24
 
@@ -68,6 +71,7 @@ No changes (fixing seemingly corrupted package)
 
 ## [1.0.1] - 2019-07-15
 
+
 ### Changed
 
 - updated dependencies (resolves CVE-2019-10744 on lodash < 4.17.13 (sub) dev dependency)
@@ -77,7 +81,9 @@ No changes (fixing seemingly corrupted package)
 
 Initial release
 
-[unreleased]: https://github.com/konfirm/node-random/compare/v1.1.1...HEAD
+[unreleased]: https://github.com/konfirm/node-random/compare/v1.1.3...HEAD
+[1.1.3]: https://github.com/konfirm/node-random/compare/v1.1.2...v1.1.3
+[1.1.2]: https://github.com/konfirm/node-random/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/konfirm/node-random/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/konfirm/node-random/compare/v1.0.4...v1.1.0
 [1.0.4]: https://github.com/konfirm/node-random/compare/v1.0.3...v1.0.4

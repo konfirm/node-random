@@ -1,3 +1,6 @@
+![tests](https://github.com/konfirm/node-random/actions/workflows/tests.yml/badge.svg)
+![release](https://github.com/konfirm/node-random/actions/workflows/release.yml/badge.svg)
+
 # Random Number Generator
 
 As the name implies, this package generates random numbers. The main goal for this package is to generate unbiased random numbers within given boundaries.
@@ -74,7 +77,7 @@ const rand: Array<number> = [...generate(16, 8)];
 The `generate` method returns a [Generator][5], which only generates value if these are being consumed. This is a very nice on-demand way of programming complicated and/or expensive calls, such as generating random values.
 
 | argument | type   | default    | purpose                                                                    |
-|----------|--------|------------|----------------------------------------------------------------------------|
+| -------- | ------ | ---------- | -------------------------------------------------------------------------- |
 | `limit`  | number |            | The upper limit of the generated value(s)                                  |
 | `total`  | number | `Infinity` | Stop generating values after `total` (`Infinity` means it will never stop) |
 
@@ -155,7 +158,7 @@ const rand = [...generate(16, 100)];
 The `safeRandom` method creates a single random value ranging from 0 to `limit`.
 
 | argument | type   | purpose                                   |
-|----------|--------|-------------------------------------------|
+| -------- | ------ | ----------------------------------------- |
 | `limit`  | number | The upper limit of the generated value(s) |
 
 As mentioned with the infinite generator above, this method can be used if individual numbers are needed throughout the lifecycle of an application, without the option to use fixed lengths.
@@ -202,7 +205,7 @@ for (let i: number = 0; i < 100; ++i) {
 Create a random value using the specified number of random bytes. It will not be capped to a limit, instead the output will be an unsigned integer value for `bytes` values up to 3, and signed after that.
 
 | argument | type   | purpose                                                |
-|----------|--------|--------------------------------------------------------|
+| -------- | ------ | ------------------------------------------------------ |
 | `bytes`  | number | Create a random value (uses [`Crypto.randomBytes`][7]) |
 
 
@@ -248,7 +251,7 @@ for (let i: number = 0; i < 100; ++i) {
 Calculate the umask and bytes needed to safely create an unbiased random value. The number or bytes is used to create a large enough random number (using `random`) and the umask is used to persuade the random value within the unbiased value range.
 
 | argument | type   | purpose                                   |
-|----------|--------|-------------------------------------------|
+| -------- | ------ | ----------------------------------------- |
 | `limit`  | number | The upper limit of the generated value(s) |
 
 The response is an object (exported typescript type is `MaskBytes`) with the following structure:
